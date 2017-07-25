@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {routing} from "./app.routing";
 import {FacebookModule} from "ngx-facebook";
 import {HttpModule} from "@angular/http";
+import {AuthenticationService} from "./authentication/authentication.service";
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import {HttpModule} from "@angular/http";
         FacebookModule.forRoot()
     ],
     bootstrap: [AppComponent],
+    providers: [AuthenticationService]
 })
 export class AppModule {
 
