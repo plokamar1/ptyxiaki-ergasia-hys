@@ -2,4 +2,4 @@
 /.idea
 /typings
 npm-debug.log
-
+/.env
