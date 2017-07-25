@@ -2,6 +2,7 @@ import {Component, OnInit } from '@angular/core';
 import {NgForm, FormGroup, FormControl, Validators} from "@angular/forms";
 import { FacebookService, LoginResponse } from 'ngx-facebook';
 import { User} from "../../models/user.model"
+import {AuthenticationService} from "../authentication.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -10,8 +11,8 @@ import { User} from "../../models/user.model"
 })
 export class SignUpComponent implements OnInit {
     signUpForm: FormGroup;
-    user: User;
-    constructor( private fb: FacebookService) {
+    constructor( private fb: FacebookService,
+                 private authenticationService: AuthenticationService) {
     //First we have to call fb.init() in order to make further calls to the facebook api
         // the appId is necessary for facebook to accept the init.
         console.log('Initializing Facebook');
@@ -36,14 +37,17 @@ export class SignUpComponent implements OnInit {
     }
     //onSubmit gives us the user info when he submits.
     onSubmit(form: NgForm) {
-        this.user = new User(form.form.value.firstname,
+        const user = new User(form.form.value.firstname,
                             form.form.value.lastname,
                             form.form.value.email,
-                            form.form.value.password,
-                            "form"
+                            form.form.value.password
             );
+        this.authenticationService.signUp(user).subscribe(
+            data => console.log(data),
+            error => console.log(error)
+        );
         console.log(form);
-        console.log(this.user);
+        console.log(user);
         //this.signUpForm.reset();
     }
 
