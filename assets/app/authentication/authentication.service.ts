@@ -18,4 +18,15 @@ export class AuthenticationService {
             .map((response: Response)=> response.json())
             .catch((error: Response)=> Observable.throw(error.json()));
     }
+    signIn(user: User){
+        const body = JSON.stringify(user);
+        const headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post('https://csethesis.herokuapp.com/auth/signin', body ,{headers: headers})
+            .map((response: Response)=> response.json())
+            .catch((error: Response)=> Observable.throw(error.json()));
+    }
+
+    isLoggedIn(){
+        return localStorage.getItem('token') !== null ;
+    }
 }
