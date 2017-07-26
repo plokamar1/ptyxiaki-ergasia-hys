@@ -1,9 +1,9 @@
 import {Component, OnInit } from '@angular/core';
 import {NgForm, FormGroup, FormControl, Validators} from "@angular/forms";
 import { FacebookService, LoginResponse } from 'ngx-facebook';
-import { User} from "../../models/user.model"
-import {AuthenticationService} from "../authentication.service";
 
+import { User } from "../../models/user.model"
+import {AuthenticationService} from "../authentication.service";
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
@@ -12,7 +12,7 @@ import {AuthenticationService} from "../authentication.service";
 export class SignUpComponent implements OnInit {
     signUpForm: FormGroup;
     constructor( private fb: FacebookService,
-                 private authenticationService: AuthenticationService) {
+                 private authService: AuthenticationService) {
     //First we have to call fb.init() in order to make further calls to the facebook api
         // the appId is necessary for facebook to accept the init.
         console.log('Initializing Facebook');
@@ -36,17 +36,17 @@ export class SignUpComponent implements OnInit {
         });
     }
     //onSubmit gives us the user info when he submits.
-    onSubmit(form: NgForm) {
-        const user = new User(form.form.value.firstname,
-                            form.form.value.lastname,
-                            form.form.value.email,
-                            form.form.value.password
-            );
-        this.authenticationService.signUp(user).subscribe(
+    onSignUp(form: NgForm) {
+        const user = new User(form.form.value.email,
+                            form.form.value.password,
+                            form.form.value.firstname,
+                            form.form.value.lastname
+        );
+        this.authService.signUp(user).subscribe(
             data => console.log(data),
             error => console.log(error)
         );
-        console.log(form);
+        console.log();
         console.log(user);
         //this.signUpForm.reset();
     }
