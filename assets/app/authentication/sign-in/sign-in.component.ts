@@ -1,9 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {FacebookService} from "ngx-facebook";
 
 import {AuthenticationService} from "../authentication.service"
 import {User} from "../../models/user.model";
-import {Router} from "@angular/router";
+
+
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html'
@@ -13,7 +16,9 @@ export class SignInComponent implements OnInit{
     signInForm: FormGroup;
 
     constructor( private authService: AuthenticationService,
-                 private router: Router) {}
+                 private router: Router,
+                 private fb: FacebookService) {}
+
     ngOnInit() {
         //onInit i declare and create the formgroup object which has the characteristics
         //of the form elements.
@@ -42,6 +47,14 @@ export class SignInComponent implements OnInit{
                   console.error(error)
               }
             );
+    }
+
+    onFBLogin() {
+        const userFBDAta = this.authService.FBSignIn();
+        console.log(userFBDAta);
+    }
+
+    onGGLSignIn(){
     }
 
 }
