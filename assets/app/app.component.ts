@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import {FacebookService} from "ngx-facebook";
+declare const FB: any;
 
 @Component({
     selector: 'my-app',
     templateUrl: './app.component.html'
 })
 export class AppComponent {
-    constructor( private fb: FacebookService,){
+    constructor(){
 
         //fb.init should start right away. The appId and the version aren't optional
-        fb.init({appId      : '697020153828938',
+        FB.init({appId      : '752997224907283',
                 cookie     : true,
                 xfbml      : true,
-                version    : 'v2.8'
+                version    : 'v2.10'
             }
         );
+        console.log("Facebook initiated");
     }
     
 }
