@@ -16,10 +16,12 @@ export class SignUpComponent implements OnInit {
     //First we have to call fb.init() in order to make further calls to the facebook api
         // the appId is necessary for facebook to accept the init.
         console.log('Initializing Facebook');
+/*
         fb.init({
             appId: 'We need an appId',
             version: 'v2.10'
         });
+*/
 
     }
 
@@ -38,6 +40,7 @@ export class SignUpComponent implements OnInit {
     //onSubmit gives us the user info when he submits.
     onSignUp(form: NgForm) {
         const user = new User(form.form.value.email,
+                            'FORM',
                             form.form.value.password,
                             form.form.value.firstname,
                             form.form.value.lastname
@@ -46,7 +49,6 @@ export class SignUpComponent implements OnInit {
             data => console.log(data),
             error => console.log(error)
         );
-        console.log();
         console.log(user);
         //this.signUpForm.reset();
     }
