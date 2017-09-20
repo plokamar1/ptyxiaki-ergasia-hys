@@ -55,11 +55,7 @@ export class SignUpComponent implements OnInit {
 
     //onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
     onFBLogin() {
-  /*      this.fb.login()
-            .then((res: LoginResponse) => {
-                console.log('Logged in', res);
-            })
-            .catch(this.handleError);*/
+        const user = this.authService.FBSignIn();
     }
 
     //catches the errors
