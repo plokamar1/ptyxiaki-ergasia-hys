@@ -17,7 +17,9 @@ export class SignInComponent implements OnInit{
 
     constructor( private authService: AuthenticationService,
                  private router: Router,
-                 private fb: FacebookService) {}
+                 private fb: FacebookService) {
+        //checking the status of the user. If he is logged in continue
+    }
 
     ngOnInit() {
         //onInit i declare and create the formgroup object which has the characteristics
@@ -26,13 +28,13 @@ export class SignInComponent implements OnInit{
             email: new FormControl(null,[
                 Validators.required,
                 Validators.pattern("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])")
-            ]),//the email is not optional thoough i has to be written according to this REGEX
+            ]),//the email is not optional though it has to be written according to this REGEX
             password: new FormControl(null, Validators.required)
         });
 
     }
     onSignIn(form) {
-        const user = new User(form.value.email, form.value.password);
+        const user = new User(form.value.email,'FORM', form.value.password);
         this.authService.signIn(user)
             .subscribe(
               data => {
@@ -41,7 +43,7 @@ export class SignInComponent implements OnInit{
                   //to the local browser memory. This memory lasts for 2 hours
                   localStorage.setItem('token', data.token);
                   localStorage.setItem('userId', data.userId);
-                  this.router.navigateByUrl('/sign-in');
+                  this.router.navigateByUrl('/sign-up');
               },
               error => {
                   console.error(error)
@@ -50,11 +52,8 @@ export class SignInComponent implements OnInit{
     }
 
     onFBLogin() {
-        const userFBDAta = this.authService.FBSignIn();
-        console.log(userFBDAta);
-    }
-
-    onGGLSignIn(){
+        const user = this.authService.FBSignIn();
+        console.log(user);
     }
 
 }
