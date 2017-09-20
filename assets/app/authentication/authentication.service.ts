@@ -35,8 +35,8 @@ export class AuthenticationService {
             if( response.status === "connected"){
                 //get the email of the user from facebook
                 FB.api('/me','get',{fields:"email"},function (resp) {
-                    console.log(response);
-                    const user = new User(resp.email,'FB','','', response.authResponse.userID);
+                    const user = new User(resp.email,'FB','','','',response.authResponse.userID);
+                    console.log(user);
                     return user;
                 });
             }else{
@@ -44,9 +44,8 @@ export class AuthenticationService {
                 FB.login(function(response) {
                     if(response.status === "connected"){
                         //then the same happens and we produce the user model which will be sent to the database
-                        FB.api('/me','get',{fields:"email"},function (resp) {
-                            console.log(response);
-                            const user = new User(resp.email,'FB','','', response.authResponse.userID);
+                        FB.api('/me','get',{fields:"email,first_name,last_name"},function (resp) {
+                            const user = new User(resp.email,'FB','',resp.first_name,resp.last_name, response.authResponse.userID);
                             console.log(user);
                             return user;
                         });
